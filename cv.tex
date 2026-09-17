@@ -1,0 +1,125 @@
+\documentclass[a4paper,11pt]{article}
+
+% --- CẤU HÌNH TIẾNG VIỆT & FONT ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font giống Times New Roman
+\usepackage[left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+% --- CÁC GÓI TIỆN ÍCH ---
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref} 
+
+% --- ĐỊNH NGHĨA MÀU SẮC ---
+\definecolor{myblue}{RGB}{0, 79, 159} 
+
+% --- ĐỊNH DẠNG TIÊU ĐỀ SECTION ---
+\titleformat{\section}
+  {\large\bfseries\color{myblue}} 
+  {}{0em}{} 
+  [\color{myblue}\titlerule] 
+
+\titlespacing{\section}{0pt}{10pt}{5pt}
+
+% Tắt thụt đầu dòng cho toàn văn bản
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% --- THÔNG TIN CÁ NHÂN ---
+\begin{center}
+    {\Huge \bfseries \color{myblue} TRẦN DƯƠNG AN} \\[5pt]
+    (+84) 965324313 \textbar{} tranduonganttcole@gmail.com \textbar{} \href{https://github.com/DuongAn15}{github.com/DuongAn15}
+\end{center}
+
+% --- MỤC TIÊU ---
+\section{MỤC TIÊU NGHỀ NGHIỆP}
+\textbf{Kỹ sư Phần mềm Nhúng (Embedded Software) / 5G Protocol Engineer} \\
+Sinh viên năm 3 ngành Kỹ thuật Máy tính, Đại học Bách khoa Hà Nội, CPA 3.93/4.0 (Xuất sắc). Có nền tảng vững về lập trình C/C++ hệ thống, xử lý đa luồng hiệu năng cao và mô phỏng giao thức Control Plane trong mạng di động. Mong muốn ứng tuyển Giai đoạn 2 chương trình Viettel Digital Talent lĩnh vực 5G để đóng góp vào việc tối ưu hóa và phát triển các phân hệ báo hiệu mạng thế hệ mới.
+
+% --- HỌC VẤN ---
+\section{HỌC VẤN}
+\textbf{Đại học Bách Khoa Hà Nội} \hfill 09/2023 -- Hiện tại \\
+Trường Công nghệ Thông tin và Truyền thông \\
+Chuyên ngành: Công nghệ thông tin -- Chương trình đào tạo: Kỹ thuật máy tính (IT2) \\
+\textbf{CPA: 3.93/4.0}
+
+% --- KỸ NĂNG CHUYÊN MÔN ---
+\section{KỸ NĂNG CHUYÊN MÔN}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Ngôn ngữ:} C/C++ (Thành thạo), Python, Assembly (RISC-V). 
+    \item \textbf{Mạng \& Giao thức:} Kiến thức cơ bản về Mạng máy tính và 5G, Kỹ thuyệt Truyến thông số, Lập trình Socket mạng (TCP/UDP).
+    \item \textbf{Lập trình hệ thống:} Đa luồng (POSIX Threads), Đồng bộ hóa (Mutex, Race Condition), Xử lý bộ đệm hiệu năng cao (Circular Buffer, Ping-Pong Buffer), DMA.
+    \item \textbf{Nền tảng \& Công cụ:} STM32, FPGA Gowin, Linux, Yosys, nextpnr, Icarus Verilog, Git \& GitHub.
+        \item \textbf{Ngoại ngữ:} Tiếng Anh (IELTS 6.0).
+\end{itemize}
+
+% --- DỰ ÁN KỸ THUẬT ---
+\section{DỰ ÁN KỸ THUẬT}
+
+\textbf{5G NR L3 Control Plane Simulation Project} \hfill 06/2026 -- 07/2026 \\
+\textit{C/C++, Linux Socket Programming (TCP/UDP), Multi-threading (Pthreads), Mutex}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Xây dựng mô hình giả lập đa tiến trình cho hai thủ tục Paging và SFN Sync trong 5G NR Control Plane, tuân thủ công thức Paging Frame theo chuẩn 3GPP TS 38.304.
+    \item Thiết kế kiến trúc Producer-Consumer (luồng TCP nhận từ AMF, luồng UDP phát vô tuyến) với Circular Queue 2000 phần tử khóa Mutex, đạt \textbf{500 gói Paging/giây, 0\% mất gói}.
+    \item Áp dụng lập lịch Paging động (N=4) và đồng hồ \texttt{CLOCK\_MONOTONIC} chống Virtual Clock Drift, giảm \textbf{75\% tải tức thời} trên PDCCH/PDSCH.
+\end{itemize}
+
+\vspace{6pt}
+
+\textbf{RISC-V Custom DSP Architecture Extension on FPGA (Đồ án II)} \hfill 03/2026 -- 06/2026 \\
+\textit{Verilog RTL, FPGA Gowin GW1NR-9 (Tang Nano 9K), Yosys, nextpnr, GTKWave}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Mở rộng tập lệnh RISC-V PicoRV32 với 3 lệnh Custom-0 (PADDS16, PSUBS16, PMAC16); từ bỏ giao diện PCPI, can thiệp trực tiếp decoder và ALU gốc để đọc trực tiếp thanh ghi tích lũy.
+    \item Thiết kế mini-pipeline 3 giai đoạn cho PMAC16 với mạch bão hòa cứng $[-32768, 32767]$, giải quyết timing violation ở tần số 27MHz.
+    \item Tăng tốc bộ lọc FIR 16-tap đạt \textbf{Speedup 3.40x} so với RV32I thuần, giữ $F_{max}$ ổn định ở 37.95 MHz.
+\end{itemize}
+
+\vspace{6pt}
+
+\textbf{TouchGFX Dynomite Game on STM32F429} \hfill 05/2026 -- 07/2026 \\
+\textit{C++ / HAL, STM32F429 Discovery Kit (Cortex-M4), TouchGFX (MVP), I2S, DMA Circular}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Phát triển game Dynomite theo kiến trúc TouchGFX MVP, đọc 4 nút vật lý bằng Direct Polling đồng bộ vòng lặp UI 60Hz để loại bỏ race condition với ISR.
+    \item Triển khai DMA Circular (kiến trúc Ping-Pong Buffer) giải mã nhạc nền ADPCM on-the-fly qua I2S, đưa Framebuffer Double Buffering ra SDRAM ngoại 8MB.
+    \item Tối ưu va chạm Hex Grid bằng bình phương khoảng cách (loại bỏ \texttt{sqrt}), duy trì \textbf{60Hz ổn định}.
+\end{itemize}
+
+\vspace{6pt}
+
+\textbf{Real-world Map Pathfinding Application} \hfill 10/2025 -- 01/2026 \\
+\textit{Công nghệ: Python, CustomTkinter, OSMnx, Multithreading, Algorithms}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Xây dựng ứng dụng Desktop tìm đường tối ưu trên dữ liệu bản đồ thực tế khu vực Bách Khoa Hà Nội.
+    \item Triển khai và tối ưu hóa 6 thuật toán tìm kiếm đồ thị (Dijkstra, A*, Bidirectional A*...); áp dụng kỹ thuật tìm kiếm hai chiều (Bidirectional) giúp giảm mạnh không gian duyệt node.
+    \item Ứng dụng \textbf{Multithreading} để xử lý song song tính toán hình học vùng cấm của hàng nghìn vật cản động mà không gây treo giao diện (Non-blocking UI). Phản hồi thời gian thực dựa trên cấu trúc đồ thị Priority Queue và Adjacency List tối ưu.
+\end{itemize}
+
+% --- CHỨNG CHỈ & THÀNH TÍCH ---
+\section{CHỨNG CHỈ \& THÀNH TÍCH}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Chứng chỉ IELTS 6.0
+    \item Chứng chỉ Tin học văn phòng MOS Excel và PowerPoint
+    \item Học bổng Khuyến khích học tập Đại học Bách khoa Hà Nội (4 kỳ liên tiếp).
+    \item Giấy khen Sinh viên xuất sắc năm học 2024 - 2025 của Đại học Bách khoa Hà Nội.
+    \item Giấy khen của Đoàn Thanh niên Đại học Bách khoa Hà Nội về Công tác Đoàn và Phong trào thanh niên năm học 2024 - 2025
+    \item Sinh viên 5 Tốt cấp Đại học năm học 2024 - 2025.
+\end{itemize}
+
+% --- HOẠT ĐỘNG NGOẠI KHÓA ---
+\section{HOẠT ĐỘNG NGOẠI KHÓA}
+\textbf{Đoàn Thanh niên Đại học Bách Khoa Hà Nội} \hfill 10/2023 -- 12/2025 \\
+\textit{Thành viên Đội Thanh niên xung kích - Ban Thanh niên Tình nguyện}
+
+\textbf{Hội Sinh viên Đại học Bách Khoa Hà Nội} \hfill 03/2025 -- Hiện tại \\
+\textit{Thành viên Mảng chuyên môn Câu lạc bộ Hỗ trợ học tập Bách khoa}
+
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Kỹ năng sư phạm và truyền tải kiến thức công nghệ.
+    \item Quản lý thời gian, rèn luyện kỹ năng lãnh đạo và làm việc nhóm trong môi trường áp lực cao.
+\end{itemize}
+
+\end{document}
