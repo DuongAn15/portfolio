@@ -1,6 +1,3 @@
-// ==========================================
-// BƯỚC 5: COMPONENT THÊM NGƯỜI DÙNG (AddUser)
-// ==========================================
 function AddUser({ onAdd }) {
   const [adding, setAdding] = React.useState(false);
   const [user, setUser] = React.useState({
@@ -12,7 +9,6 @@ function AddUser({ onAdd }) {
     website: ""
   });
 
-  // Xử lý thay đổi input, sử dụng Spread Operator (...) với thuộc tính lồng nhau
   const handleChange = (e) => {
     const { id, value } = e.target;
     if (["street", "suite", "city"].includes(id)) {
@@ -27,16 +23,12 @@ function AddUser({ onAdd }) {
 
   const handleAdd = (e) => {
     if (e) e.preventDefault();
-    // Validation theo yêu cầu đề bài
     if (user.name.trim() === "" || user.username.trim() === "") {
       alert("Vui lòng nhập Name và Username!");
       return;
     }
 
-    // Truyền user lên App thông qua callback onAdd (Lifting State Up)
     onAdd(user);
-
-    // Reset form và đóng modal
     setUser({
       name: "",
       username: "",
@@ -51,19 +43,16 @@ function AddUser({ onAdd }) {
   return (
     <div>
       <button className="btn btn-primary" onClick={() => setAdding(true)}>
-        <i className="fa-solid fa-user-plus"></i> Thêm người dùng
+        + Thêm người dùng
       </button>
 
       {adding && (
         <div className="modal-overlay" onClick={() => setAdding(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3>
-                <i className="fa-solid fa-user-plus" style={{ color: "var(--primary)" }}></i>{" "}
-                Thêm người dùng mới
-              </h3>
+              <h3>Thêm người dùng mới</h3>
               <button className="modal-close" onClick={() => setAdding(false)}>
-                <i className="fa-solid fa-xmark"></i>
+                &times;
               </button>
             </div>
 
@@ -76,7 +65,6 @@ function AddUser({ onAdd }) {
                   <input
                     id="name"
                     type="text"
-                    placeholder="VD: Leanne Graham"
                     value={user.name}
                     onChange={handleChange}
                     required
@@ -89,7 +77,6 @@ function AddUser({ onAdd }) {
                   <input
                     id="username"
                     type="text"
-                    placeholder="VD: Bret"
                     value={user.username}
                     onChange={handleChange}
                     required
@@ -103,7 +90,6 @@ function AddUser({ onAdd }) {
                   <input
                     id="email"
                     type="email"
-                    placeholder="user@example.com"
                     value={user.email}
                     onChange={handleChange}
                   />
@@ -113,7 +99,6 @@ function AddUser({ onAdd }) {
                   <input
                     id="phone"
                     type="text"
-                    placeholder="0987654321"
                     value={user.phone}
                     onChange={handleChange}
                   />
@@ -126,21 +111,21 @@ function AddUser({ onAdd }) {
                   <input
                     id="street"
                     type="text"
-                    placeholder="Đường (Street)"
+                    placeholder="Đường"
                     value={user.address.street}
                     onChange={handleChange}
                   />
                   <input
                     id="suite"
                     type="text"
-                    placeholder="Căn hộ/Phòng (Suite)"
+                    placeholder="Căn hộ/Phòng"
                     value={user.address.suite}
                     onChange={handleChange}
                   />
                   <input
                     id="city"
                     type="text"
-                    placeholder="Thành phố (City)"
+                    placeholder="Thành phố"
                     value={user.address.city}
                     onChange={handleChange}
                   />
@@ -152,7 +137,6 @@ function AddUser({ onAdd }) {
                 <input
                   id="website"
                   type="text"
-                  placeholder="hildegard.org"
                   value={user.website}
                   onChange={handleChange}
                 />
@@ -163,7 +147,7 @@ function AddUser({ onAdd }) {
                   Hủy
                 </button>
                 <button type="submit" className="btn btn-primary">
-                  <i className="fa-solid fa-check"></i> Xác nhận thêm
+                  Xác nhận
                 </button>
               </div>
             </form>
@@ -174,5 +158,4 @@ function AddUser({ onAdd }) {
   );
 }
 
-// Xuất ra phạm vi toàn cục để App có thể sử dụng
 window.AddUser = AddUser;

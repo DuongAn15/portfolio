@@ -1,12 +1,8 @@
-// ==========================================
-// BƯỚC 4, 6, 7: BẢNG KẾT QUẢ, SỬA, XÓA (ResultTable)
-// ==========================================
 function ResultTable({ keyword, user, onAdded }) {
   const [users, setUsers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [editing, setEditing] = React.useState(null);
 
-  // Bước 4.1: Tải dữ liệu từ API khi component mount (useEffect [])
   React.useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
@@ -18,8 +14,7 @@ function ResultTable({ keyword, user, onAdded }) {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Lỗi tải API, sử dụng dữ liệu mặc định:", err);
-        // Dữ liệu fallback nếu mất mạng hoặc API lỗi
+        console.error("Lỗi tải API:", err);
         setUsers([
           {
             id: 1,
@@ -42,11 +37,9 @@ function ResultTable({ keyword, user, onAdded }) {
       });
   }, []);
 
-  // Bước 5.4: Khi prop user thay đổi -> thêm vào danh sách
   React.useEffect(() => {
     if (user) {
       setUsers((prev) => {
-        // Tạo ID duy nhất an toàn: ID lớn nhất hiện tại + 1
         const nextId = prev.length > 0 ? Math.max(...prev.map((u) => u.id || 0)) + 1 : 1;
         return [...prev, { ...user, id: nextId }];
       });
@@ -54,8 +47,6 @@ function ResultTable({ keyword, user, onAdded }) {
     }
   }, [user]);
 
-  // Bước 6: Sửa người dùng (Edit)
-  // Kỹ thuật Deep Copy để form sửa không làm biến đổi trực tiếp đối tượng trong bảng
   function editUser(userItem) {
     setEditing({
       ...userItem,
@@ -80,18 +71,14 @@ function ResultTable({ keyword, user, onAdded }) {
       alert("Vui lòng nhập Name và Username!");
       return;
     }
-    // Cập nhật danh sách qua map()
     setUsers((prev) => prev.map((u) => (u.id === editing.id ? editing : u)));
     setEditing(null);
   }
 
-  // Bước 7: Xóa người dùng (Delete)
   function removeUser(id) {
-    // Dùng filter() để trả về mảng mới không chứa id cần xóa
     setUsers((prev) => prev.filter((u) => u.id !== id));
   }
 
-  // Bước 4.4: Lọc danh sách theo keyword (name, username)
   const filteredUsers = users.filter((u) => {
     const kw = (keyword || "").toLowerCase().trim();
     if (!kw) return true;
@@ -101,12 +88,7 @@ function ResultTable({ keyword, user, onAdded }) {
   });
 
   if (loading) {
-    return (
-      <div className="loading-state">
-        <div className="spinner"></div>
-        <p>Đang tải danh sách người dùng...</p>
-      </div>
-    );
+    return <div className="loading-state">Đang tải dữ liệu...</div>;
   }
 
   return (
@@ -115,24 +97,20 @@ function ResultTable({ keyword, user, onAdded }) {
         <table>
           <thead>
             <tr>
-              <th style={{ width: "60px" }}>ID</th>
+              <th style={{ width: "50px" }}>ID</th>
               <th>Họ tên</th>
               <th>Username</th>
               <th>Email</th>
               <th>Địa chỉ</th>
               <th>Số điện thoại</th>
-              <th style={{ textAlign: "center", width: "140px" }}>Hành động</th>
+              <th style={{ textAlign: "center", width: "120px" }}>Hành động</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.length === 0 ? (
               <tr>
                 <td colSpan="7" className="empty-state">
-                  <i
-                    className="fa-regular fa-folder-open"
-                    style={{ fontSize: "2rem", marginBottom: "8px", display: "block" }}
-                  ></i>
-                  Không tìm thấy người dùng nào phù hợp với từ khóa "{keyword}".
+                  Không tìm thấy người dùng phù hợp với từ khóa "{keyword}".
                 </td>
               </tr>
             ) : (
@@ -146,28 +124,23 @@ function ResultTable({ keyword, user, onAdded }) {
                   <td>{u.email || "-"}</td>
                   <td>
                     {u.address && (u.address.street || u.address.suite || u.address.city)
-                      ? `${u.address.street || ""}, ${u.address.suite || ""}, ${u.address.city || ""}`.replace(
-                          /^, |, $/g,
-                          ""
-                        )
+                      ? `${u.address.street || ""}, ${u.address.suite || ""}, ${u.address.city || ""}`.replace(/^, |, $/g, "")
                       : "-"}
                   </td>
                   <td>{u.phone || "-"}</td>
                   <td style={{ textAlign: "center" }}>
-                    <div className="cell-actions" style={{ justifyContent: "center" }}>
+                    <div className="cell-actions">
                       <button
                         className="btn btn-edit"
-                        title="Sửa thông tin"
                         onClick={() => editUser(u)}
                       >
-                        <i className="fa-solid fa-pen-to-square"></i> Sửa
+                        Sửa
                       </button>
                       <button
                         className="btn btn-delete"
-                        title="Xóa người dùng"
                         onClick={() => removeUser(u.id)}
                       >
-                        <i className="fa-solid fa-trash-can"></i> Xóa
+                        Xóa
                       </button>
                     </div>
                   </td>
@@ -178,17 +151,13 @@ function ResultTable({ keyword, user, onAdded }) {
         </table>
       </div>
 
-      {/* Modal chỉnh sửa người dùng */}
       {editing && (
         <div className="modal-overlay" onClick={() => setEditing(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3>
-                <i className="fa-solid fa-user-pen" style={{ color: "var(--warning)" }}></i>{" "}
-                Chỉnh sửa người dùng (#{editing.id})
-              </h3>
+              <h3>Sửa người dùng (#{editing.id})</h3>
               <button className="modal-close" onClick={() => setEditing(null)}>
-                <i className="fa-solid fa-xmark"></i>
+                &times;
               </button>
             </div>
 
@@ -269,12 +238,8 @@ function ResultTable({ keyword, user, onAdded }) {
                 <button type="button" className="btn btn-cancel" onClick={() => setEditing(null)}>
                   Hủy
                 </button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  style={{ backgroundColor: "var(--success)" }}
-                >
-                  <i className="fa-solid fa-floppy-disk"></i> Lưu thay đổi
+                <button type="submit" className="btn btn-primary">
+                  Lưu thay đổi
                 </button>
               </div>
             </form>
@@ -285,5 +250,4 @@ function ResultTable({ keyword, user, onAdded }) {
   );
 }
 
-// Xuất ra phạm vi toàn cục để App có thể sử dụng
 window.ResultTable = ResultTable;
